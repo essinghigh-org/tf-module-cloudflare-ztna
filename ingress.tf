@@ -8,7 +8,7 @@ locals {
   homelab_entries = [for s in var.services : s.model == "external" ? null : {
     hostname = s.hostname
     service  = coalesce(s.service, "${var.default_service_base}${s.port != null ? ":${s.port}" : ""}")
-    origin_request = { for k, v in (s.bare_origin ? {
+    origin_request = { for k, v in(s.bare_origin ? {
       ca_pool                  = null
       http2_origin             = null
       http_host_header         = null
