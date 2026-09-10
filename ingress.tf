@@ -7,7 +7,7 @@
 locals {
   homelab_entries = [for s in var.services : s.model == "external" ? null : {
     hostname = s.hostname
-    service  = coalesce(s.service, "${var.default_service_base}${s.port != null ? ":${s.port}" : ""}")
+    service  = s.service != null ? s.service : "${var.default_service_base}${s.port != null ? ":${s.port}" : ""}"
     origin_request = { for k, v in(s.bare_origin ? {
       ca_pool                  = null
       http2_origin             = null
@@ -21,9 +21,9 @@ locals {
       } : {
       ca_pool                  = s.ca_pool
       http2_origin             = s.http2_origin
-      http_host_header         = coalesce(s.http_host_header, s.hostname)
+      http_host_header         = s.http_host_header != null ? s.http_host_header : s.hostname
       no_tls_verify            = s.no_tls_verify
-      origin_server_name       = coalesce(s.origin_server_name, s.hostname)
+      origin_server_name       = s.origin_server_name != null ? s.origin_server_name : s.hostname
       disable_chunked_encoding = s.disable_chunked_encoding
       no_happy_eyeballs        = s.no_happy_eyeballs
       match_sn_ito_host        = s.match_sn_ito_host
