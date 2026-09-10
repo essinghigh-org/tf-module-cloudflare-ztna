@@ -8,7 +8,17 @@ locals {
   homelab_entries = [for s in var.services : s.model == "external" ? null : {
     hostname = s.hostname
     service  = coalesce(s.service, "${var.default_service_base}${s.port != null ? ":${s.port}" : ""}")
-    origin_request = s.bare_origin ? {} : { for k, v in {
+    origin_request = { for k, v in (s.bare_origin ? {
+      ca_pool                  = null
+      http2_origin             = null
+      http_host_header         = null
+      no_tls_verify            = null
+      origin_server_name       = null
+      disable_chunked_encoding = null
+      no_happy_eyeballs        = null
+      match_sn_ito_host        = null
+      access                   = null
+      } : {
       ca_pool                  = s.ca_pool
       http2_origin             = s.http2_origin
       http_host_header         = coalesce(s.http_host_header, s.hostname)
@@ -22,7 +32,7 @@ locals {
         required  = false
         team_name = var.access_team_name
       } : null
-    } : k => v if v != null }
+    }) : k => v if v != null }
   }]
 
   external_entries = [for s in var.services : s.model == "external" ? {
