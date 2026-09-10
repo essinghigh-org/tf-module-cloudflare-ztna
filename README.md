@@ -12,18 +12,18 @@ module "tunnel" {
 
   account_id         = var.account_id
   tunnel_name        = "home"
-  expected_tunnel_id = "3719d3f4-d477-457c-8ab9-6eaae28eadf9"
-  access_team_name   = "1411314"
+  expected_tunnel_id = "00000000-0000-0000-0000-000000000000"
+  access_team_name   = "your-team-name"
 
   services = [
     { hostname = "app.example.com" },
     { hostname = "plex.example.com", port = 32400, http_host_header = "", origin_server_name = "" },
-    { hostname = "ssh.example.com", service = "ssh://192.168.1.69", access = true },
+    { hostname = "ssh.example.com", service = "ssh://198.51.100.10", access = true },
     { hostname = "ext.example.com", model = "external", host = "origin.example.com" },
   ]
 
   routes = {
-    "192.168.0.0/23" = {}
+    "198.51.100.0/24" = {}
   }
 
   gateway_policies = {
@@ -33,7 +33,7 @@ module "tunnel" {
       filters     = ["dns"]
       traffic     = "dns.fqdn == \"example.com\""
       precedence  = 11000
-      rule_settings = { override_ips = ["192.168.1.69"] }
+      rule_settings = { override_ips = ["198.51.100.10"] }
     }
   }
 }
