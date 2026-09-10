@@ -8,3 +8,12 @@ variable "tunnel_name" {
   type        = string
   default     = "home"
 }
+
+variable "routes" {
+  description = "Private CIDR routes served by this tunnel (network => settings)"
+  type = map(object({
+    comment            = optional(string)
+    virtual_network_id = optional(string)
+  }))
+  default = {}
+}
