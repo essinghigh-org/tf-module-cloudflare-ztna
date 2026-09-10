@@ -18,7 +18,7 @@ variable "expected_tunnel_id" {
 variable "default_service_base" {
   description = "scheme://host prefix for homelab services (port appended per service)"
   type        = string
-  default     = "https://192.168.1.69"
+  default     = "https://203.0.113.1"
 }
 
 variable "access_team_name" {
