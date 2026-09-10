@@ -18,7 +18,7 @@ module "tunnel" {
   services = [
     { hostname = "app.example.com" },
     { hostname = "plex.example.com", port = 32400, http_host_header = "", origin_server_name = "" },
-    { hostname = "ssh.example.com", service = "ssh://203.0.113.10", access = true },
+    { hostname = "ssh.example.com", service = "ssh://198.51.100.10", access = true },
     { hostname = "ext.example.com", model = "external", host = "origin.example.com" },
   ]
 
@@ -33,7 +33,7 @@ module "tunnel" {
       filters     = ["dns"]
       traffic     = "dns.fqdn == \"example.com\""
       precedence  = 11000
-      rule_settings = { override_ips = ["203.0.113.10"] }
+      rule_settings = { override_ips = ["198.51.100.10"] }
     }
   }
 }
